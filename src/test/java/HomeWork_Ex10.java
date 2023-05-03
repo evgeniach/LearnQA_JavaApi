@@ -19,6 +19,6 @@ public class HomeWork_Ex10 {
     @ValueSource(strings = {"","abcdefghijklmn","abcdefghijklmno","abcdefghijklmnop"})
     public void testHelloMethodNameWithParams(String text) {
 
-        assertTrue(text.length()>15,"Text length less than 15");
+        assertTrue(text.length()>15,"Text length less than 15. Text: '"+text+"'");
     }
 }
