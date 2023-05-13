@@ -48,7 +48,7 @@ public class UserAuthTest extends BaseTestCase {
     @DisplayName("Test positive auth user")
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests
-                .makeGetRequest(
+                .makeGetRequestWithTokenAdnCookie(
                     "https://playground.learnqa.ru/api/user/auth",
                     this.header,
                     this.cookie

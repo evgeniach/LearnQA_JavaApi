@@ -9,8 +9,17 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 public class ApiCoreRequests {
+
+    @Step("Make a GET-request")
+    public Response makeGetRequest(String url) {
+        return given()
+                .filter(new AllureRestAssured())
+                .get(url)
+                .andReturn();
+    }
+
     @Step("Make a GET-request with token and auth cookie")
-    public Response makeGetRequest(String url,String token, String cookie) {
+    public Response makeGetRequestWithTokenAdnCookie(String url, String token, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .header(new Header("x-csrf-token",token))

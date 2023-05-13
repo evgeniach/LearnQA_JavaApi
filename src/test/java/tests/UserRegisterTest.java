@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.Assertions;
 import lib.BaseTestCase;
