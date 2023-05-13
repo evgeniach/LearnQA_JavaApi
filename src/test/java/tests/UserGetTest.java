@@ -34,11 +34,8 @@ public class UserGetTest extends BaseTestCase {
         Response responseGetAuth= apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/login",authData);
 
-        String header = this.getHeader(responseGetAuth,"x-csrf-token");
-        String cookie = this.getCookie(responseGetAuth,"auth_sid");
-
         Response responseUserData = apiCoreRequests
-                .makeGetRequestWithTokenAdnCookie("https://playground.learnqa.ru/api/user/2",header,cookie);
+                .makeGetRequestWithTokenAdnCookie("https://playground.learnqa.ru/api/user/2",this.getHeader(responseGetAuth,"x-csrf-token"),this.getCookie(responseGetAuth,"auth_sid"));
 
         String[] expectedFields = {"username","firstName","lastName","email"};
 
@@ -54,11 +51,8 @@ public class UserGetTest extends BaseTestCase {
         Response responseGetAuth= apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/login",authData);
 
-        String header = this.getHeader(responseGetAuth,"x-csrf-token");
-        String cookie = this.getCookie(responseGetAuth,"auth_sid");
-
         Response responseUserData = apiCoreRequests
-                .makeGetRequestWithTokenAdnCookie("https://playground.learnqa.ru/api/user/1",header,cookie);
+                .makeGetRequestWithTokenAdnCookie("https://playground.learnqa.ru/api/user/1",this.getHeader(responseGetAuth,"x-csrf-token"),this.getCookie(responseGetAuth,"auth_sid"));
 
         Assertions.assertJsonHasField(responseUserData,"username");
         Assertions.assertJsonHasNotField(responseUserData,"firstName");
