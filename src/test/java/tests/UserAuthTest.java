@@ -44,7 +44,7 @@ public class UserAuthTest extends BaseTestCase {
 
 
     @Test
-    @Description("This test successfully authorize uer by email and password")
+    @Description("This test successfully authorize user by email and password")
     @DisplayName("Test positive auth user")
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests
@@ -57,7 +57,7 @@ public class UserAuthTest extends BaseTestCase {
        Assertions.assertJsonByName(responseCheckAuth,"user_id",this.userIdOnAuth);
     }
 
-    @Description("This test checks aithorization status w/o sending auth cookie or token")
+    @Description("This test checks authorization status w/o sending auth cookie or token")
     @DisplayName("Test negative auth user")
     @ParameterizedTest
     @ValueSource(strings = {"cookie", "headers"})

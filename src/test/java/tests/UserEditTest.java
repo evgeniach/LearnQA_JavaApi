@@ -1,7 +1,5 @@
 package tests;
 
-import groovyjarjarantlr4.v4.codegen.model.SrcOp;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
@@ -22,10 +20,10 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userData);
+        Response responseCreateAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userData);
 
-        String userId = responseCreateAuth.getString("id");
+        String userId = getStringFromJson(responseCreateAuth,"id");
 
         //login
         Map<String, String> authData = new HashMap<>();
@@ -56,10 +54,10 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userData);
+        Response responseCreateAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userData);
 
-        String userId = responseCreateAuth.getString("id");
+        String userId = getStringFromJson(responseCreateAuth,"id");
 
         //edit
         String newName = "Changed Name";
@@ -67,7 +65,7 @@ public class UserEditTest extends BaseTestCase {
         editData.put("firstName",newName);
 
         Response responseEditUser= apiCoreRequests
-                .makePutReques("https://playground.learnqa.ru/api/user/"+userId,editData);
+                .makePutRequest("https://playground.learnqa.ru/api/user/"+userId,editData);
 
         Assertions.assertResponseCodeEquals(responseEditUser,400);
         Assertions.assertResponseTextEquals(responseEditUser,"Auth token not supplied");
@@ -81,8 +79,8 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userOneData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateUserOneAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userOneData);
+        Response responseCreateUserOneAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userOneData);
 
         //login user
         Map<String, String> authUserOneData = new HashMap<>();
@@ -96,10 +94,10 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userTwoData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateUserTwoAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userTwoData);
+        Response responseCreateUserTwoAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userTwoData);
 
-        String userTwoId = responseCreateUserTwoAuth.getString("id");
+        String userTwoId = getStringFromJson(responseCreateUserTwoAuth,"id");
 
         //login user
         Map<String, String> authUserTwoData = new HashMap<>();
@@ -130,10 +128,10 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userData);
+        Response responseCreateAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userData);
 
-        String userId = responseCreateAuth.getString("id");
+        String userId = getStringFromJson(responseCreateAuth,"id");
 
         //login
         Map<String, String> authData = new HashMap<>();
@@ -161,10 +159,10 @@ public class UserEditTest extends BaseTestCase {
         //generate user
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
-        JsonPath responseCreateAuth= apiCoreRequests
-                .makePostRequestJsonResponse("https://playground.learnqa.ru/api/user",userData);
+        Response responseCreateAuth= apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user",userData);
 
-        String userId = responseCreateAuth.getString("id");
+        String userId = getStringFromJson(responseCreateAuth,"id");
 
         //login
         Map<String, String> authData = new HashMap<>();
