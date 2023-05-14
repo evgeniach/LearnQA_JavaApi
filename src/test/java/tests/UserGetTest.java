@@ -1,18 +1,27 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("User API: Get user cases")
+@Feature("Get user data")
 public class UserGetTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
+
+    @Story("Negative test for get user data")
+    @Description("This test check: a user data can't return without auth.")
+    @DisplayName("Test getting user data without auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testGetUserDataNotAuth() {
 
@@ -25,6 +34,10 @@ public class UserGetTest extends BaseTestCase {
         Assertions.assertJsonHasNotField(responseUserData,"email");
     }
 
+    @Story("Positive test for get user data")
+    @Description("This test check: a user data can't return with auth.")
+    @DisplayName("Test getting user data with auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testGetUserDetailsAuthAsSameUser() {
         Map<String,String> authData = new HashMap<>();
@@ -42,6 +55,10 @@ public class UserGetTest extends BaseTestCase {
         Assertions.assertJsonHasFields(responseUserData,expectedFields);
     }
 
+    @Story("Negative test for get user data")
+    @Description("This test check: a user data can't return with auth for another user.")
+    @DisplayName("Test getting user data with auth for another user")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testGetUserDetailsAuthAsAnotherUser() {
         Map<String,String> authData = new HashMap<>();

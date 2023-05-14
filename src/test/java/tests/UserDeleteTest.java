@@ -1,21 +1,27 @@
 package tests;
 
-import io.restassured.path.json.JsonPath;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("User API: Deleted cases")
+@Feature("Deleting user")
 public class UserDeleteTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
-    //Первый - на попытку удалить пользователя по ID 2. Его данные для авторизации:.
+    @Story("Negative test for DELETE")
+    @Description("This test checks that the user with id = 2 cannot be deleted")
+    @DisplayName("Test delete user with id=2")
+    @Severity(value=SeverityLevel.CRITICAL)
     @Test
     public void testDeleteUserWithId2() {
         Map<String,String> authData = new HashMap<>();
@@ -32,8 +38,10 @@ public class UserDeleteTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseDeleteUser,"Please, do not delete test users with ID 1, 2, 3, 4 or 5.");
     }
 
-    //Второй - позитивный. Создать пользователя, авторизоваться из-под него, удалить,
-    //затем попробовать получить его данные по ID и убедиться, что пользователь действительно удален.
+    @Story("Positive test for DELETE")
+    @Description("This test checks if a user can be deleted if they are authorized by that user.")
+    @DisplayName("Test delete user with correct auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testCreateAndDeleteUser() {
         //generate user
@@ -64,7 +72,10 @@ public class UserDeleteTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseUserData,"User not found");
     }
 
-    //Третий - негативный, попробовать удалить пользователя, будучи авторизованными другим пользователем.
+    @Story("Negative test for DELETE")
+    @Description("This test checks if a user can't be deleted if they are authorized by another user.")
+    @DisplayName("Test delete user with incorrect auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testCreateAndDeleteUserUsedAuthFromAnotherUser() {
         //userOne

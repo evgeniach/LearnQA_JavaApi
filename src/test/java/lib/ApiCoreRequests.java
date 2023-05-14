@@ -3,7 +3,6 @@ package lib;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.Header;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -11,7 +10,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 public class ApiCoreRequests {
 
-    @Step("Make a GET-request")
+    @Step("Make a GET-request to {url}")
     public Response makeGetRequest(String url) {
         return given()
                 .filter(new AllureRestAssured())
@@ -19,7 +18,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a GET-request with token and auth cookie")
+    @Step("Make a GET-request to {url} with token and auth cookie")
     public Response makeGetRequestWithTokenAdnCookie(String url, String token, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
@@ -29,7 +28,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a GET-request with auth cookie only")
+    @Step("Make a GET-request to {url} with auth cookie only")
     public Response makeGetRequestWithCookie(String url, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
@@ -38,7 +37,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a GET-request with token only")
+    @Step("Make a GET-request to {url} with token only")
     public Response makeGetRequestWithToken(String url, String token) {
         return given()
                 .filter(new AllureRestAssured())
@@ -47,7 +46,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a Post-request")
+    @Step("Make a Post-request to {url}")
     public Response makePostRequest(String url, Map<String,String> data) {
         return given()
                 .filter(new AllureRestAssured())
@@ -56,7 +55,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a PUT-request with token and auth cookie")
+    @Step("Make a PUT-request to {url} with token and auth cookie")
     public Response makePutRequestWithTokenAdnCookie(String url, String token, String cookie, Map<String,String> editData) {
         return given()
                 .filter(new AllureRestAssured())
@@ -67,7 +66,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a PUT-request")
+    @Step("Make a PUT-request to {url}")
     public Response makePutRequest(String url, Map<String,String> editData) {
         return given()
                 .filter(new AllureRestAssured())
@@ -76,7 +75,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a DELETE-request with token and auth cookie")
+    @Step("Make a DELETE-request to {url} with token and auth cookie")
     public Response makeDeleteRequest(String url, String token, String cookie) {
         return given()
                 .filter(new AllureRestAssured())

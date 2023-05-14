@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -14,13 +15,10 @@ import java.util.Map;
 
 import lib.Assertions;
 import lib.ApiCoreRequests;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
-@Epic("Authorisation cases")
-@Feature("Authorization")
+@Epic("User API: Authorisation cases")
+@Feature("Authorization user")
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;
@@ -28,6 +26,7 @@ public class UserAuthTest extends BaseTestCase {
     int userIdOnAuth;
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
+    @Step("Login user")
     @BeforeEach
     public void loginUser(){
         Map<String,String> authData = new HashMap<>();
@@ -42,10 +41,11 @@ public class UserAuthTest extends BaseTestCase {
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth,"user_id");
     }
 
-
-    @Test
+    @Story("Positive test for auth")
     @Description("This test successfully authorize user by email and password")
     @DisplayName("Test positive auth user")
+    @Severity(value=SeverityLevel.BLOCKER)
+    @Test
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests
                 .makeGetRequestWithTokenAdnCookie(
@@ -57,8 +57,10 @@ public class UserAuthTest extends BaseTestCase {
        Assertions.assertJsonByName(responseCheckAuth,"user_id",this.userIdOnAuth);
     }
 
+    @Story("Negative test for auth")
     @Description("This test checks authorization status w/o sending auth cookie or token")
-    @DisplayName("Test negative auth user")
+    @DisplayName("Test negative auth user {condition}")
+    @Severity(value=SeverityLevel.BLOCKER)
     @ParameterizedTest
     @ValueSource(strings = {"cookie", "headers"})
     public void testNegativeAuthUser(String condition) {

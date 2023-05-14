@@ -1,20 +1,28 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("User API: Edit user cases")
+@Feature("Edit user")
 public class UserEditTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
+    @Story("Positive test for edit user")
+    @Description("This test check: a user can be edited if auth by that user.")
+    @DisplayName("Test edit user with correct auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testEditJustCreatedTest() {
         //generate user
@@ -48,7 +56,10 @@ public class UserEditTest extends BaseTestCase {
         Assertions.assertJsonByName(responseUserData,"firstName",newName);
     }
 
-    //Попытаемся изменить данные пользователя, будучи неавторизованными
+    @Story("Negative test for edit user")
+    @Description("This test check: a user can't be edited without auth.")
+    @DisplayName("Test edit user without auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testEditUserWithoutAuth() {
         //generate user
@@ -72,7 +83,10 @@ public class UserEditTest extends BaseTestCase {
 
     }
 
-    //Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
+    @Story("Negative test for edit user")
+    @Description("This test check: a user can't be edited if auth by another user.")
+    @DisplayName("Test edit user with incorrect auth")
+    @Severity(value=SeverityLevel.BLOCKER)
     @Test
     public void testEditUserWithAuthFromAnotherUser() {
         //userOne
@@ -122,7 +136,10 @@ public class UserEditTest extends BaseTestCase {
         Assertions.assertJsonByName(responseUserData,"firstName","learnqa");
     }
 
-    //Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
+    @Story("Negative test for edit user")
+    @Description("This test check: a user can't be edited with incorrect email.")
+    @DisplayName("Test edit user with incorrect email")
+    @Severity(value=SeverityLevel.CRITICAL)
     @Test
     public void testEditUserWithIncorrectEmail() {
         //generate user
@@ -153,7 +170,10 @@ public class UserEditTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseEditUser,"Invalid email format");
     }
 
-    //Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
+    @Story("Negative test for edit user")
+    @Description("This test check: a user can't be edited with incorrect firstName.")
+    @DisplayName("Test edit user with incorrect firstName")
+    @Severity(value=SeverityLevel.CRITICAL)
     @Test
     public void testEditUserWithIncorrectFirstName() {
         //generate user
